@@ -1,6 +1,5 @@
 package com.zep.bankingkafka.dtos;
 
-import com.zep.bankingkafka.models.AccountInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
