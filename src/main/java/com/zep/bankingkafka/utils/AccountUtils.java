@@ -22,4 +22,9 @@ public class AccountUtils {
     public   static  final  String ACCOUNT_CREATION_SUCCESS_MESSAGE="Account successfully created";
     public  static  final  String ACCOUNT_EXISTS_CODE="001";
     public  static  final  String ACCOUNT_EXISTS_MESSAGE="A user with the same email has an account created";
+    public  static  final  String ACCOUNT_NOT_EXISTS_CODE="003";
+    public  static  final  String ACCOUNT_NOT_EXISTS_MESSAGE="Account does not exist";
+    public  static  final  String ACCOUNT_FOUND_CODE="004";
+    public  static  final  String ACCOUNT_FOUND_SUCCESS="User account found";
+
 }
