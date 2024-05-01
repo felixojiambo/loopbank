@@ -24,6 +24,7 @@ public class User {
     private String gender;
     private  String address;
     private  String county;
+    private  String identificationNumber;
     private  String accountNumber;
     private BigDecimal accountBalance;
     private  String email;
