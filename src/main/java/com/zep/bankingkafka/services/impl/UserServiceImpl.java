@@ -2,9 +2,11 @@ package com.zep.bankingkafka.services.impl;
 
 import com.zep.bankingkafka.dtos.AccountInfo;
 import com.zep.bankingkafka.dtos.BankResponse;
+import com.zep.bankingkafka.dtos.EmailDetails;
 import com.zep.bankingkafka.dtos.UserRequest;
 import com.zep.bankingkafka.models.User;
 import com.zep.bankingkafka.repositories.UserRepository;
+import com.zep.bankingkafka.services.EmailService;
 import com.zep.bankingkafka.services.UserService;
 import com.zep.bankingkafka.utils.AccountUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import java.math.BigDecimal;
 public class  UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    EmailService emailService;
     @Override
     public BankResponse createAccount(UserRequest userRequest) {
         //save new user into db
@@ -43,6 +47,14 @@ public class  UserServiceImpl implements UserService {
                 .status("ACTIVE")
                 .build();
         User savedUser=userRepository.save(newUser);
+        //send email alerts
+        EmailDetails emailDetails= EmailDetails.builder()
+                .recipient(savedUser.getEmail())
+                .subject("ACCOUNT CREATION")
+                .messageBody("Congratulations! Your Account has been successfully created.\n Your account details: \n" +
+                        "Account Name: "+savedUser.getFirstName()+" "+savedUser.getLastName()+" "+savedUser.getOtherName()+"\nAccountNumber: "+savedUser.getAccountNumber())
+                .build();
+        emailService.sendEmailAlert(emailDetails);
         return BankResponse.builder()
                 .responseCode(AccountUtils.ACCOUNT_CREATION_SUCCESS)
                 .responseMessage(AccountUtils.ACCOUNT_CREATION_SUCCESS_MESSAGE)
