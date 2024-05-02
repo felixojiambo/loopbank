@@ -111,6 +111,7 @@ public class  UserServiceImpl implements UserService {
         User userToCredit=userRepository.findByAccountNumber(request.getAccountNumber());
 
         userToCredit.setAccountBalance(userToCredit.getAccountBalance().add(request.getAmount()));
+        userRepository.save(userToCredit);
         return  BankResponse.builder()
                 .responseCode(AccountUtils.ACCOUNT_CREDITED_SUCCESS)
                 .responseMessage(AccountUtils.ACCOUNT_CREDITED_SUCCESS_MESSAGE)
