@@ -6,7 +6,8 @@ import java.time.Year;
 public class AccountUtils {
 
     public  static  String generateAccountNumber(){
-        //generating account number//update should have county 2 letters,year and 6digits
+        //generating account number
+        //feature update should have county 2 letters,year and 6 digits
         Year currentYear= Year.now();
         int min=100000;
         int max=999999;
@@ -26,5 +27,11 @@ public class AccountUtils {
     public  static  final  String ACCOUNT_NOT_EXISTS_MESSAGE="Account does not exist";
     public  static  final  String ACCOUNT_FOUND_CODE="004";
     public  static  final  String ACCOUNT_FOUND_SUCCESS="User account found";
-
+    public  static  final  String ACCOUNT_CREDITED_SUCCESS="005";
+    public  static  final  String ACCOUNT_CREDITED_SUCCESS_MESSAGE="User account credited";
+    public  static  final  String ACCOUNT_DEBITED_SUCCESS="006";
+    public  static  final  String ACCOUNT_DEBITED_SUCCESS_MESSAGE="User account debited";
+    public  static  final  String ACCOUNT_TRANSFER_SUCCESS="007";
+    public  static  final  String ACCOUNT_TRANSFER_SUCCESS_MESSAGE="Funds transferred successfully";
 }
+

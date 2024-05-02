@@ -110,7 +110,17 @@ public class  UserServiceImpl implements UserService {
         }
         User userToCredit=userRepository.findByAccountNumber(request.getAccountNumber());
 
-        return null;
+        userToCredit.setAccountBalance(userToCredit.getAccountBalance().add(request.getAmount()));
+        return  BankResponse.builder()
+                .responseCode(AccountUtils.ACCOUNT_CREDITED_SUCCESS)
+                .responseMessage(AccountUtils.ACCOUNT_CREDITED_SUCCESS_MESSAGE)
+                .accountInfo(AccountInfo.builder()
+                        .accountName(userToCredit.getFirstName()+" "+userToCredit.getLastName()+" "+userToCredit.getOtherName())
+                        .accountBalance(userToCredit.getAccountBalance())
+                        .accountNumber(userToCredit.getAccountNumber())
+
+                .build())
+                .build();
     }
 
 
