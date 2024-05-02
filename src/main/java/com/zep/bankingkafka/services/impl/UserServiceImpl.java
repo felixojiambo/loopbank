@@ -163,4 +163,9 @@ public class  UserServiceImpl implements UserService {
 
 
     }
+    //implement the following later
+    //bank inter account transfer
+    //sms alert for crediting, debiting and bank transfer
+
+
 }
