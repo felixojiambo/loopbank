@@ -126,6 +126,8 @@ public class  UserServiceImpl implements UserService {
                 .build();
     }
 
+
+
     @Override
     public BankResponse debitAccount(CreditDebitRequest request) {
         //check if account exists
@@ -167,5 +169,32 @@ public class  UserServiceImpl implements UserService {
     //bank inter account transfer
     //sms alert for crediting, debiting and bank transfer
 
+    @Override
+    public BankResponse transfer(TransferRequest request) {
 
+         //get account to debit(check if it exists)
+        //check if the amount being debited is not more than current account
+        //debit account
+        //get account to credit
+        //credit the account
+
+        boolean isdestinationAccountExist=userRepository.existsByAccountNumber(request.getDestinationAccountNumber());
+        if(!isdestinationAccountExist){
+            return BankResponse.builder()
+                    .responseCode(AccountUtils.ACCOUNT_NOT_EXISTS_CODE)
+                    .responseMessage(AccountUtils.ACCOUNT_NOT_EXISTS_MESSAGE)
+                    .accountInfo(null)
+                    .build();
+        }
+       User sourceAccountUser=userRepository.findByAccountNumber(request.getSourceAccountNumber());
+        if(request.getAmount().compareTo(sourceAccountUser.getAccountBalance())<0){
+           return  BankResponse.builder()
+                   .responseCode(AccountUtils.INSUFFICIENT_BALANCE_CODE)
+                   .responseMessage(AccountUtils.INSUFFICIENT_BALANCE_MESSAGE)
+                   .accountInfo(null)
+                   .build();
+        }
+       sourceAccountUser.setAccountBalance(sourceAccountUser.getAccountBalance().subtract(request.getAmount()));
+        userRepository.save(sourceAccountUser);
+    }
 }

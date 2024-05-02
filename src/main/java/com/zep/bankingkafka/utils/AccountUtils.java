@@ -35,5 +35,7 @@ public class AccountUtils {
     public  static  final  String ACCOUNT_TRANSFER_SUCCESS_MESSAGE="Funds transferred successfully";
     public  static  final  String INSUFFICIENT_BALANCE_CODE="008";
     public  static  final  String INSUFFICIENT_BALANCE_MESSAGE="Insufficient funds";
+
+
 }
 
