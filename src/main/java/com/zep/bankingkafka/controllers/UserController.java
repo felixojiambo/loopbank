@@ -1,6 +1,8 @@
 package com.zep.bankingkafka.controllers;
 import com.zep.bankingkafka.dtos.*;
 import com.zep.bankingkafka.services.UserService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     UserService userService;
+    @Operation(
+            summary = "Create New User Account",
+            description = "Creating new user  and assigning account number"
+    )
+    @ApiResponse()
     @PostMapping("/create")
     public BankResponse createAccount(@RequestBody UserRequest userRequest){
         return  userService.createAccount(userRequest);
