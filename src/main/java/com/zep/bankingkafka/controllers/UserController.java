@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
-@Tag(name="User Account Management APIS")
+@Tag(name="User Account Management APIs")
 public class UserController {
     @Autowired
     UserService userService;
