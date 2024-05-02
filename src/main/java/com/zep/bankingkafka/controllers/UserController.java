@@ -1,5 +1,6 @@
 package com.zep.bankingkafka.controllers;
 import com.zep.bankingkafka.dtos.BankResponse;
+import com.zep.bankingkafka.dtos.CreditDebitRequest;
 import com.zep.bankingkafka.dtos.EnquiryRequest;
 import com.zep.bankingkafka.dtos.UserRequest;
 import com.zep.bankingkafka.services.UserService;
@@ -24,5 +25,9 @@ public class UserController {
     public  String nameEnquiry(@RequestBody EnquiryRequest request)
     {
         return  userService.nameEnquiry(request);
+    }
+    @PostMapping("/credit")
+    public  BankResponse creditAccount(@RequestBody CreditDebitRequest request){
+        return userService.creditAccount(request);
     }
 }
