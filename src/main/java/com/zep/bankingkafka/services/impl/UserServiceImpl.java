@@ -136,11 +136,29 @@ public class  UserServiceImpl implements UserService {
                     .accountInfo(null)
                     .build();
         }
-        User userToDebit=userRepository.findByAccountNumber(request.getAccountNumber());
-        int availableBalance=Integer.parseInt( userToDebit.getAccountBalance().toString());
-        int debitAmount=Integer.parseInt(request.getAmount().toString());
-        return null;
+        User userToDebit = userRepository.findByAccountNumber(request.getAccountNumber());
+        int availableBalance = Integer.parseInt(userToDebit.getAccountBalance().toString());
+        int debitAmount = Integer.parseInt(request.getAmount().toString());
+        if (availableBalance < debitAmount) {
+            return BankResponse.builder()
+                    .responseCode(AccountUtils.INSUFFICIENT_BALANCE_CODE)
+                    .responseMessage(AccountUtils.INSUFFICIENT_BALANCE_MESSAGE)
+                    .accountInfo(null)
+                    .build();
+        } else {
+            userToDebit.setAccountBalance(userToDebit.getAccountBalance().subtract(request.getAmount()));
+            userRepository.save(userToDebit);
+            return BankResponse.builder()
+                    .responseCode(AccountUtils.ACCOUNT_DEBITED_SUCCESS)
+                    .responseMessage(AccountUtils.ACCOUNT_DEBITED_SUCCESS_MESSAGE)
+                    .accountInfo(AccountInfo.builder()
+                            .accountNumber(request.getAccountNumber())
+                            .accountName(userToDebit.getFirstName()+" "+userToDebit.getLastName()+" "+userToDebit.getOtherName())
+                            .accountBalance(userToDebit.getAccountBalance())
+                            .build())
+                    .build();
+        }
 
 
-
+    }
 }
