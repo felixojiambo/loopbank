@@ -96,4 +96,22 @@ public class  UserServiceImpl implements UserService {
         User founUser=userRepository.findByAccountNumber(request.getAccountNumber());
         return  founUser.getFirstName()+" "+founUser.getLastName()+" "+founUser.getOtherName();
     }
+
+    @Override
+    public BankResponse creditAccount(CreditDebitRequest request) {
+
+        boolean isAccountExist = userRepository.existsByAccountNumber(request.getAccountNumber());
+        if (!isAccountExist) {
+            return BankResponse.builder()
+                    .responseCode(AccountUtils.ACCOUNT_NOT_EXISTS_CODE)
+                    .responseMessage(AccountUtils.ACCOUNT_NOT_EXISTS_MESSAGE)
+                    .accountInfo(null)
+                    .build();
+        }
+        User userToCredit=userRepository.findByAccountNumber(request.getAccountNumber());
+
+        return null;
+    }
+
+
 }
