@@ -3,10 +3,12 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
+import com.zep.bankingkafka.dtos.EmailDetails;
 import com.zep.bankingkafka.models.Transaction;
 import com.zep.bankingkafka.models.User;
 import com.zep.bankingkafka.repositories.TransactionRepository;
 import com.zep.bankingkafka.repositories.UserRepository;
+import com.zep.bankingkafka.services.EmailService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import java.util.List;
 public class BankStatement {
     private TransactionRepository transactionRepository;
     private UserRepository userRepository;
+    private EmailService emailService;
     private  static  final  String FILE="C:\\Users\\ojiamboloc\\Documents\\Statements.pdf";
     /*retrieve list of transactions within a date range given an account number
     *generate pdf file of transaction
@@ -100,6 +103,13 @@ public class BankStatement {
         document.add(statementInfo);
         document.add(transactionTable);
         document.close();
+        EmailDetails emailDetails=EmailDetails.builder()
+                .recipient(user.getEmail())
+                .subject("STATEMENT OF ACCOUNT")
+                .messageBody("Kindly find the requested account statement")
+                .attachment(FILE)
+                .build();
+        emailService.sendEmailWithAttachments(emailDetails);
         return  transactionList;
 
 
