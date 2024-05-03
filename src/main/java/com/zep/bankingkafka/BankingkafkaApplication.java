@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-//using Springdoc OpenAPI, removing the @EnableSwagger2 annotation
-// and ensuring that all Swagger/OpenAPI annotations are from the Springdoc package.
+//using Spring doc OpenAPI, removing the @EnableSwagger2 annotation
+// and ensuring that all Swagger/OpenAPI annotations are from the Spring doc package.
 //@EnableSwagger2
 @OpenAPIDefinition(
 		info = @Info(
