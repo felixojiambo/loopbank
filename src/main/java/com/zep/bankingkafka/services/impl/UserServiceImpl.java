@@ -20,6 +20,9 @@ public class  UserServiceImpl implements UserService {
     EmailService emailService;
     @Autowired
     TransactionService transactionService;
+
+//    @Autowired
+//    PasswordEncoder passwordEncoder;
     @Override
     public BankResponse createAccount(UserRequest userRequest) {
         //save new user into db
