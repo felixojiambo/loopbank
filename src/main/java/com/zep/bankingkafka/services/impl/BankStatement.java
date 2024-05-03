@@ -79,6 +79,26 @@ public class BankStatement {
         PdfPCell status=new PdfPCell(new Phrase("Status"));
         status.setBackgroundColor(BaseColor.BLUE);
         status.setBorder(0);
+        transactionTable.addCell(date);
+        transactionTable.addCell(transactionType);
+        transactionTable.addCell(transactionAmount);
+        transactionTable.addCell(status);
+        transactionList.forEach(transaction -> {
+            transactionTable.addCell(new Phrase(transaction.getCreatedAt().toString()));
+            transactionTable.addCell(new Phrase(transaction.getTransactionType()));
+            transactionTable.addCell(new Phrase(transaction.getAmount().toString()));
+            transactionTable.addCell(new Phrase(transaction.getStatus()));
+        });
+        statementInfo.addCell(customerInfo);
+        statementInfo.addCell(statement);
+        statementInfo.addCell(endDate);
+        statementInfo.addCell(name);
+        statementInfo.addCell(space);
+        statementInfo.addCell(address);
+
+        document.add(bankInfoTable);
+        document.add(statementInfo);
+        document.add(transactionTable);
         return  transactionList;
 
 
