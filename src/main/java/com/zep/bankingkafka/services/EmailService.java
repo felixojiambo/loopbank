@@ -6,4 +6,5 @@ import com.zep.bankingkafka.dtos.EmailDetails;
 
 public interface EmailService {
     void sendEmailAlert(EmailDetails emailDetails);
+    void  sendEmailWithAttachments(EmailDetails emailDetails);
 }
