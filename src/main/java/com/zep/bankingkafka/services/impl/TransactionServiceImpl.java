@@ -5,7 +5,9 @@ import com.zep.bankingkafka.models.Transaction;
 import com.zep.bankingkafka.repositories.TransactionRepository;
 import com.zep.bankingkafka.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TransactionServiceImpl implements TransactionService {
     @Autowired
     TransactionRepository transactionRepository;

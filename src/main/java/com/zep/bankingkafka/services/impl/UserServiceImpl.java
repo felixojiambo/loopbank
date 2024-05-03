@@ -3,6 +3,7 @@ import com.zep.bankingkafka.dtos.*;
 import com.zep.bankingkafka.models.User;
 import com.zep.bankingkafka.repositories.UserRepository;
 import com.zep.bankingkafka.services.EmailService;
+import com.zep.bankingkafka.services.TransactionService;
 import com.zep.bankingkafka.services.UserService;
 import com.zep.bankingkafka.utils.AccountUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ public class  UserServiceImpl implements UserService {
     UserRepository userRepository;
     @Autowired
     EmailService emailService;
-
+    @Autowired
+    TransactionService transactionService;
     @Override
     public BankResponse createAccount(UserRequest userRequest) {
         //save new user into db
@@ -120,6 +122,7 @@ public class  UserServiceImpl implements UserService {
                 .transactionType("CREDIT")
                 .amount(request.getAmount())
                 .build();
+        transactionService.saveTransaction(transactionDto);
         return  BankResponse.builder()
                 .responseCode(AccountUtils.ACCOUNT_CREDITED_SUCCESS)
                 .responseMessage(AccountUtils.ACCOUNT_CREDITED_SUCCESS_MESSAGE)
@@ -158,6 +161,15 @@ public class  UserServiceImpl implements UserService {
         } else {
             userToDebit.setAccountBalance(userToDebit.getAccountBalance().subtract(request.getAmount()));
             userRepository.save(userToDebit);
+
+
+            //save transaction
+            TransactionDto transactionDto= TransactionDto.builder()
+                    .accountNumber(userToDebit.getAccountNumber())
+                    .transactionType("DEBIT")
+                    .amount(request.getAmount())
+                    .build();
+            transactionService.saveTransaction(transactionDto);
             return BankResponse.builder()
                     .responseCode(AccountUtils.ACCOUNT_DEBITED_SUCCESS)
                     .responseMessage(AccountUtils.ACCOUNT_DEBITED_SUCCESS_MESSAGE)
