@@ -232,6 +232,15 @@ public class  UserServiceImpl implements UserService {
                 .messageBody("The sum of "+ request.getAmount()+"has been sent to  your account from"+sourceUsername+ "Your current balance is"+destinationAccountUser.getAccountBalance())
                 .build();
         emailService.sendEmailAlert(creditAlert);
+
+
+        //save transaction
+        TransactionDto transactionDto= TransactionDto.builder()
+                .accountNumber(destinationAccountUser.getAccountNumber())
+                .transactionType("CREDIT ALERT")
+                .amount(request.getAmount())
+                .build();
+        transactionService.saveTransaction(transactionDto);
         return  BankResponse.builder()
                 .responseCode(AccountUtils.ACCOUNT_TRANSFER_SUCCESS)
                 .responseMessage(AccountUtils.ACCOUNT_TRANSFER_SUCCESS_MESSAGE)
