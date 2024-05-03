@@ -99,6 +99,7 @@ public class BankStatement {
         document.add(bankInfoTable);
         document.add(statementInfo);
         document.add(transactionTable);
+        document.close();
         return  transactionList;
 
 
