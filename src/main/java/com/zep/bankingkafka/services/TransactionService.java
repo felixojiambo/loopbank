@@ -1,5 +1,8 @@
 package com.zep.bankingkafka.services;
 
-public interface TransactionService {
+import com.zep.bankingkafka.dtos.TransactionDto;
+import com.zep.bankingkafka.models.Transaction;
 
+public interface TransactionService {
+void saveTransaction(TransactionDto transactionDto);
 }
