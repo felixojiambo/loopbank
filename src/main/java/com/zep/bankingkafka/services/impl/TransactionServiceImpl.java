@@ -9,8 +9,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
-    @Autowired
-    TransactionRepository transactionRepository;
+
+    private final TransactionRepository transactionRepository;
+
+    // Constructor-based Injection
+    public TransactionServiceImpl(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
+
     @Override
     public void saveTransaction(TransactionDto transactionDto) {
      Transaction transaction=Transaction.builder()

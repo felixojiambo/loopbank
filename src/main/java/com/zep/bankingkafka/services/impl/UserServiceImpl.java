@@ -14,13 +14,16 @@ import java.math.BigInteger;
 
 @Service
 public class  UserServiceImpl implements UserService {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    EmailService emailService;
-    @Autowired
-    TransactionService transactionService;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
+    private final TransactionService transactionService;
 
+    // Constructor-based Injection
+    public UserServiceImpl(UserRepository userRepository, EmailService emailService, TransactionService transactionService) {
+        this.userRepository = userRepository;
+        this.emailService = emailService;
+        this.transactionService = transactionService;
+    }
 //    @Autowired
 //    PasswordEncoder passwordEncoder;
     @Override
